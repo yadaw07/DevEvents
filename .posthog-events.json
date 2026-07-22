@@ -1,0 +1,12 @@
+[
+  {
+    "event_name": "events_explored",
+    "event_description": "A visitor clicked the primary control to explore the featured events list.",
+    "file": "components/ExploreBtn.tsx"
+  },
+  {
+    "event_name": "event_selected",
+    "event_description": "A visitor selected a featured event to open its detail page.",
+    "file": "components/EventCard.tsx"
+  }
+]
