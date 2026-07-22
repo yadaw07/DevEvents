@@ -2,12 +2,6 @@ import mongoose, { Mongoose } from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable in .env.local',
-  );
-}
-
 // Shape of the cached connection object we store on `global`
 interface MongooseCache {
   conn: Mongoose | null;
@@ -37,7 +31,7 @@ if (!global.mongooseCache) {
  * Safe to call multiple times/places — it will only ever open one
  * underlying connection.
  */
-export async function connectToDatabase(): Promise<Mongoose> {
+export async function connectDB(): Promise<Mongoose> {
   // Already connected — return immediately
   if (cached.conn) {
     return cached.conn;
@@ -46,6 +40,12 @@ export async function connectToDatabase(): Promise<Mongoose> {
   // Connection in progress — wait on the existing promise instead of
   // starting a second one (guards against race conditions on concurrent calls)
   if (!cached.promise) {
+    if (!MONGODB_URI) {
+      throw new Error(
+        'Please define the MONGODB_URI environment variable in .env.local',
+      );
+    }
+
     const opts = {
       bufferCommands: false, // fail fast instead of queuing ops before connection
     };
@@ -64,4 +64,4 @@ export async function connectToDatabase(): Promise<Mongoose> {
   return cached.conn;
 }
 
-export default connectToDatabase;
+export default connectDB;
