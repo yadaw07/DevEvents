@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import posthog from 'posthog-js';
 
 const ExploreBtn = () => {
   return (
@@ -8,7 +9,12 @@ const ExploreBtn = () => {
       type='button'
       id='explore-btn'
       className='mt-7 mx-auto'
-      onClick={() => console.log('CLICKED')}
+      onClick={() =>
+        posthog.capture('events_explored', {
+          source: 'home_hero',
+          destination: 'featured_events',
+        })
+      }
     >
       <a href='#events'>
         Explore Events
@@ -17,6 +23,7 @@ const ExploreBtn = () => {
           alt='arrow-down'
           width={24}
           height={24}
+          style={{ height: 'auto' }}
         />
       </a>
     </button>
