@@ -69,7 +69,7 @@ const EventDetailsPage = async ({
     tags,
   } = event;
 
-  let bookings = 10;
+  const bookings = 10;
 
   const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
 
