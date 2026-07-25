@@ -13,7 +13,8 @@ export async function getSimilarEventsBySlug(slug: string) {
       _id: { $ne: event?._id },
       tags: { $in: event?.tags },
     }).lean(); // lean returns plain JavaScript objects
-  } catch {
+  } catch (e) {
+    process.env.NODE_ENV === 'development' && console.log(e);
     return [];
   }
 }

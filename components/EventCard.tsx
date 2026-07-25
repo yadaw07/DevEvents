@@ -35,7 +35,13 @@ const EventCard = ({ title, image, slug, location, date, time }: props) => {
         style={{ height: 'auto' }}
       />
       <div className='flex flex-row gap-2'>
-        <Image src='/icons/pin.svg' alt='location' width={14} height={14} />
+        <Image
+          src='/icons/pin.svg'
+          alt='location'
+          width={14}
+          height={14}
+          style={{ height: 'auto' }}
+        />
         <p>{location}</p>
       </div>
 

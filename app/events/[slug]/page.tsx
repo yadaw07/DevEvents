@@ -17,7 +17,13 @@ type props = {
 
 const EventDetailItem = ({ icon, alt, label }: props) => (
   <div className='flex-row-gap-2 items-center'>
-    <Image src={icon} alt={alt} width={17} height={17} />
+    <Image
+      src={icon}
+      alt={alt}
+      width={17}
+      height={17}
+      style={{ height: 'auto' }}
+    />
     <p>{label}</p>
   </div>
 );

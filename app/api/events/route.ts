@@ -21,6 +21,8 @@ export async function POST(req: NextRequest) {
       // turns form fields into a regular JS object
       event = Object.fromEntries(formData.entries());
     } catch (e) {
+      process.env.NODE_ENV === 'development' && console.log(e);
+
       return NextResponse.json(
         { message: 'Invalid json format' },
         { status: 400 },
@@ -33,7 +35,9 @@ export async function POST(req: NextRequest) {
     try {
       tags = JSON.parse(formData.get('tags') as string);
       agenda = JSON.parse(formData.get('agenda') as string);
-    } catch {
+    } catch (e) {
+      process.env.NODE_ENV === 'development' && console.log(e);
+
       return NextResponse.json(
         { message: 'Invalid JSON for tags/agenda' },
         { status: 400 },
@@ -91,7 +95,8 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (err) {
-    console.error(err);
+    process.env.NODE_ENV === 'development' && console.log(err);
+
     return NextResponse.json(
       {
         message: 'Event creation failed',
@@ -113,7 +118,8 @@ export async function GET() {
       { status: 200 },
     );
   } catch (err) {
-    console.error(err);
+    process.env.NODE_ENV === 'development' && console.log(err);
+
     return NextResponse.json(
       {
         message: 'Event fething failed',
