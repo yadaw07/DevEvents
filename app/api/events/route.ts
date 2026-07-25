@@ -29,8 +29,16 @@ export async function POST(req: NextRequest) {
 
     const file = formData.get('image') as File;
 
-    let tags = JSON.parse(formData.get('tags') as string);
-    let agenda = JSON.parse(formData.get('agenda') as string);
+    let tags, agenda;
+    try {
+      tags = JSON.parse(formData.get('tags') as string);
+      agenda = JSON.parse(formData.get('agenda') as string);
+    } catch {
+      return NextResponse.json(
+        { message: 'Invalid JSON for tags/agenda' },
+        { status: 400 },
+      );
+    }
 
     if (!file)
       return NextResponse.json(
@@ -70,11 +78,13 @@ export async function POST(req: NextRequest) {
 
     event.image = uploadResult.secure_url;
 
-    const createdEvent = await Event.create({
-      ...event,
-      tags: tags,
-      agenda: agenda,
-    });
+    let createdEvent;
+    try {
+      createdEvent = await Event.create({ ...event, tags, agenda });
+    } catch (createErr) {
+      await cloudinary.uploader.destroy(uploadResult.public_id).catch(() => {});
+      throw createErr;
+    }
 
     return NextResponse.json(
       { message: 'Event created successfully', events: createdEvent },
