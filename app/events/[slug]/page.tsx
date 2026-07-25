@@ -51,23 +51,23 @@ const EventDetailsPage = async ({
   const { slug } = await params;
 
   const response = await fetch(`${BASE_URL}/api/events/${slug}`);
-  const {
-    event: {
-      description,
-      overview,
-      date,
-      time,
-      location,
-      audience,
-      image,
-      mode,
-      agenda,
-      organizer,
-      tags,
-    },
-  } = await response.json();
+  const { event } = await response.json();
 
-  if (!description) return notFound();
+  if (!response.ok || !event) return notFound();
+
+  const {
+    description,
+    overview,
+    date,
+    time,
+    location,
+    audience,
+    image,
+    mode,
+    agenda,
+    organizer,
+    tags,
+  } = event;
 
   let bookings = 10;
 
