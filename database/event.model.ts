@@ -26,7 +26,7 @@ export interface IEvent extends Document {
 const EventSchema = new Schema<IEvent>(
   {
     title: { type: String, required: true, trim: true },
-    slug: { type: String, unique: true, trim: true }, // generated in pre-save hook, not user-supplied
+    slug: { type: String, trim: true }, // generated in pre-save hook, not user-supplied
     description: { type: String, required: true, trim: true },
     overview: { type: String, required: true, trim: true },
     image: { type: String, required: true, trim: true },
@@ -37,6 +37,7 @@ const EventSchema = new Schema<IEvent>(
     mode: {
       type: String,
       required: true,
+      trim: true,
       enum: ['online', 'offline', 'hybrid'],
     },
     audience: { type: String, required: true, trim: true },
