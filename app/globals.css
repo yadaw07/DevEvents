@@ -270,4 +270,90 @@
       }
     }
   }
+
+  #create-event {
+    @apply flex flex-col gap-8 max-w-3xl mx-auto w-full;
+
+    form {
+      @apply flex flex-col gap-6;
+    }
+
+    .grid-2 {
+      @apply grid sm:grid-cols-2 gap-6;
+    }
+
+    .field {
+      @apply flex flex-col gap-2;
+
+      label {
+        @apply text-light-100 text-sm font-medium;
+      }
+
+      input,
+      textarea,
+      select {
+        @apply bg-dark-200 rounded-[6px] px-5 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary;
+      }
+
+      textarea {
+        @apply resize-none;
+      }
+    }
+
+    .image-upload {
+      @apply flex flex-col gap-2;
+
+      .dropzone {
+        @apply border border-dashed border-dark-200 rounded-lg flex-center flex-col gap-2 py-10 cursor-pointer hover:border-primary transition-colors text-light-200 text-sm;
+      }
+
+      .preview-wrapper {
+        @apply relative w-full h-[240px] rounded-lg overflow-hidden;
+      }
+
+      .preview {
+        @apply w-full h-full object-cover;
+      }
+
+      .remove-image {
+        @apply absolute top-3 right-3 bg-black/60 rounded-full w-8 h-8 flex-center cursor-pointer text-sm;
+      }
+    }
+
+    .tag-input {
+      @apply flex flex-row flex-wrap gap-2 bg-dark-200 rounded-[6px] px-3 py-2;
+
+      input {
+        @apply bg-transparent flex-1 min-w-[120px] px-2 py-1 outline-none;
+      }
+    }
+
+    .tag-remove {
+      @apply cursor-pointer ml-1 opacity-70 hover:opacity-100;
+    }
+
+    .agenda-item {
+      @apply flex flex-row gap-2 items-center;
+
+      input {
+        @apply flex-1;
+      }
+
+      button {
+        @apply text-light-200 hover:text-white cursor-pointer px-2;
+      }
+    }
+
+    .add-agenda-btn {
+      @apply border-dark-200 text-light-100 flex w-fit cursor-pointer items-center gap-2 rounded-full border px-5 py-2 text-sm;
+    }
+
+    .error-text {
+      @apply text-red-400 text-sm;
+    }
+
+    button[type='submit'] {
+      @apply bg-primary hover:bg-primary/90 w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-3 text-lg font-semibold text-black disabled:opacity-50 disabled:cursor-not-allowed transition-opacity;
+    }
+  }
 }

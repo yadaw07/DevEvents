@@ -151,10 +151,15 @@ const EventDetails = async ({ params }: { params: Promise<string> }) => {
       <div className='flex flex-col w-full gap-4 pt-20'>
         <h2>Similar Events</h2>
         <div className='events'>
-          {similarEvents.length > 0 &&
+          {similarEvents.length > 0 ? (
             similarEvents.map((event) => (
-              <EventCard key={event.title} {...event} />
-            ))}
+              <EventCard key={event.slug} {...event} />
+            ))
+          ) : (
+            <p className='text-light-200 text-sm'>
+              No similar events found right now — check back later.
+            </p>
+          )}
         </div>
       </div>
     </section>
