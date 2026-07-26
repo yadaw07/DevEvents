@@ -1,45 +1,21 @@
-import EventCard from '@/components/EventCard';
-import ExploreBtn from '@/components/ExploreBtn';
+import EventsList from '@/components/EventsList';
+import { Suspense } from 'react';
 
-// import { events } from '@/lib/constants';
-import { IEvent } from '@/database';
-
-import { cacheLife } from 'next/cache';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const Loader = () => (
+  <div className='flex flex-col items-center justify-center min-h-[60vh] gap-4'>
+    <div className='h-10 w-10 rounded-full border-4 border-gray-200 border-t-blue-600 animate-spin' />
+    <p className='text-lg text-gray-500'>Loading events...</p>
+  </div>
+);
 
 const Home = async () => {
-  'use cache';
-  cacheLife('hours');
-
-  const response = await fetch(`${BASE_URL}/api/events`);
-  const { events } = await response.json();
-
   return (
-    <section>
-      <h1 className='text-center'>
-        The Hub for Every Dev <br />
-        Events You Can't Miss
-      </h1>
-      <p className='text-center mt-5'>
-        Hackathons, Meetups, Conferences, All in One Place
-      </p>
-      <ExploreBtn />
-
-      <div className='mt-20 space-y-7'>
-        <h3>Featured Events</h3>
-
-        <ul className='events list-none'>
-          {events &&
-            events.length > 0 &&
-            events.map((event: IEvent) => (
-              <li key={event.title}>
-                <EventCard {...event} />
-              </li>
-            ))}
-        </ul>
-      </div>
-    </section>
+    <main>
+      {/* Lets you display a fallback until its children have finished loading */}
+      <Suspense fallback={<Loader />}>
+        <EventsList />
+      </Suspense>
+    </main>
   );
 };
 
