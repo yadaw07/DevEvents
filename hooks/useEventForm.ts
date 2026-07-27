@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export function useEventForm() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -54,6 +55,16 @@ export function useEventForm() {
   const removeAgendaItem = (index: number) =>
     setAgenda((prev) => prev.filter((_, i) => i !== index));
 
+    const resetForm = () => {
+    formRef.current?.reset(); // clears uncontrolled inputs (title, venue, date, etc.)
+    setImageFile(null);
+    setImagePreview(null);
+    setTags([]);
+    setTagInput('');
+    setAgenda(['']);
+    setError(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -94,6 +105,8 @@ export function useEventForm() {
         return;
       }
 
+      resetForm(); // clear everything before navigating away
+
       // takes the user to a new page without a full browser reload
       router.push(`/events/${data.events.slug}`);
     } catch {
@@ -104,6 +117,7 @@ export function useEventForm() {
   };
 
   return {
+    formRef,
     imagePreview,
     fileInputRef,
     handleImageChange,
