@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 
 import {
   v2 as cloudinary,
@@ -85,6 +86,8 @@ export async function POST(req: NextRequest) {
     let createdEvent;
     try {
       createdEvent = await Event.create({ ...event, tags, agenda });
+      
+      revalidateTag('events', 'max'); // invalidate the homepage's cached events list
     } catch (createErr) {
       await cloudinary.uploader.destroy(uploadResult.public_id).catch(() => {});
       throw createErr;
