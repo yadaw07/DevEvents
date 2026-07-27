@@ -1,9 +1,15 @@
 'use server';
 
+import { cacheLife, cacheTag } from 'next/cache';
+
 import { Event } from '@/database';
 import connectDB from '../mongodb';
 
 export async function getSimilarEventsBySlug(slug: string) {
+  'use cache';
+  cacheLife('hours');
+  cacheTag('events'); // same tag as EventsList — one revalidateTag call clears both
+
   try {
     await connectDB();
     const event = await Event.findOne({ slug }).lean();
