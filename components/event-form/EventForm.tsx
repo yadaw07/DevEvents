@@ -7,6 +7,7 @@ import AgendaField from './AgendaField';
 
 const EventForm = () => {
   const {
+    formRef,
     imagePreview,
     fileInputRef,
     handleImageChange,
@@ -34,7 +35,7 @@ const EventForm = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <ImageUploadField
           imagePreview={imagePreview}
           fileInputRef={fileInputRef}
